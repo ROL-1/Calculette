@@ -3,11 +3,16 @@ def ask_user(sentence="Saisir un chiffre"):  # do_something : change "askUser"
     return choice
 
 
-def addition(number):  # do_something : change "Addition"
+def list_nbs(number):
     list_numbers = []
     while number.isdigit():  # remove : # if number.isdigit():
         list_numbers.append(int(number))
-        number = ask_user("Saisir un chiffre à additionner ou clicker sur '=' ")
+    return list_numbers
+
+
+def addition(number):  # do_something : change "Addition"
+    list_numbers = list_nbs(number)
+    number = ask_user("Saisir un chiffre à additionner ou clicker sur '=' ")
     result = sum(list_numbers)  # do_something : sum
     return result
 
@@ -22,8 +27,8 @@ def soustraction(number):
         if i == 0:
             result = list_number
         else:
-            result = result - list_number
-        i = i + 1
+            result -= list_number
+        i += 1
     return result
 
 
@@ -32,13 +37,11 @@ def multplication(number):
     while number.isdigit():  # remove : # if number.isdigit():
         list_numbers.append(int(number))  # do_something : "int("
         number = ask_user("Saisir un chiffre à multiplier ou clicker sur '=' ")
-    for index, list_number in enumerate(
-        list_numbers
-    ):  # refactoriser zip(list_numbers, list(range(len(list_numbers))))
+    for index, list_number in enumerate(list_numbers):
         if index == 0:  # do_something : remove ""
             result = list_number
         else:
-            result = result * list_number  # do_something : remove /
+            result *= list_number  # do_something : remove /
     return result
 
 
@@ -47,13 +50,14 @@ def division(number):
     while number.isdigit():  # remove : # if number.isdigit():
         list_numbers.append(int(number))  # do_something : int(
         number = ask_user("Saisir un chiffre à diviser ou clicker sur '=' ")
-    for index, list_number in enumerate(
-        list_numbers
-    ):  # refactoriser zip(list_numbers, list(range(len(list_numbers))))
+    for index, list_number in enumerate(list_numbers):
         if index == 0:
             result = list_number
+        elif list_number == 0:
+            print("Division par zéro impossible")
+            result = None
         else:
-            result = result / list_number  # do_something : remove +
+            result /= list_number  # do_something : remove +
     return result
 
 
@@ -64,7 +68,8 @@ def display_interface():
     1. Additionner Tape 1
     2. Soustraire Tape 2
     3. Multiplier Tape 3
-    4. Diviser Tape 4"""
+    4. Diviser Tape 4
+    5. Pour quitter Tape 5"""
     )
     while choice.isdigit():
         choice = int(choice)  # do_something : int()
@@ -80,4 +85,6 @@ def display_interface():
         elif choice == 4:
             choice = ask_user("Saisir un chiffre à DIVISER ou clicker sur '=' ")
             result = division(choice)
+        # elif choice == 5:
+        #     print("Goodbye")
         return print(f"Le resultat est ==> {result}")
